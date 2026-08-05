@@ -1,0 +1,63 @@
+# Rust Backend
+backend/target/
+**/*.rs.bk
+*.pdb
+
+# Flutter Frontend
+frontend/.dart_tool/
+**/.dart_tool/
+frontend/.flutter-plugins
+frontend/.flutter-plugins-dependencies
+frontend/.packages
+frontend/.pub-cache/
+frontend/.pub/
+frontend/build/
+frontend/coverage/
+frontend/pubspec.lock
+
+# Android Build Artifacts
+frontend/android/.gradle/
+frontend/android/.kotlin/
+frontend/android/local.properties
+frontend/android/app/debug/
+frontend/android/app/profile/
+frontend/android/app/release/
+frontend/android/app/build/
+frontend/android/app/src/main/jniLibs/
+frontend/android/build/
+
+# Android Signing Keys
+frontend/android/key.properties
+frontend/android/app/*.jks
+frontend/android/app/*.keystore
+**/*.keystore
+**/*.jks
+
+# Flutter Rust Bridge Generated Files (directory, not file)
+frontend/lib/bridge_generated.dart/
+backend/src/frb_generated.rs
+
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Misc
+*.log
+*.swp
+*.swo
+*~
+.env
+.env.*
+
+# Temporary test files (not actual test suites)
+**/test_temp.rs
+

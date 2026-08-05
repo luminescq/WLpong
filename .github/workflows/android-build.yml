@@ -1,0 +1,82 @@
+name: Build Android APK
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    tags:
+      - 'v*' # Срабатывает при создании тега, начинающегося с "v" (например, v1.0.0)
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch: # Позволяет запускать сборку вручную из интерфейса GitHub
+
+permissions:
+  contents: write # Необходимо для автоматического создания релизов
+
+jobs:
+  build:
+    name: Build Android Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-linux-android, armv7-linux-androideabi, x86_64-linux-android
+
+      - name: Install cargo-ndk (Required for compiling Rust to Android)
+        run: cargo install cargo-ndk
+
+      # Установите генератор FRB (flutter_rust_bridge) на случай, если он нужен для компиляции
+      - name: Install flutter_rust_bridge_codegen
+        run: cargo install flutter_rust_bridge_codegen
+
+      - name: Generate Rust Bridge code (creates cargokit and bindings)
+        working-directory: ./
+        run: flutter_rust_bridge_codegen generate
+
+      - name: Accept Android licenses
+        run: yes | flutter doctor --android-licenses
+
+      - name: Get Flutter dependencies
+        working-directory: ./frontend
+        run: flutter pub get
+
+      - name: Build Split APKs
+        working-directory: ./frontend
+        run: flutter build apk --release --split-per-abi --no-tree-shake-icons
+
+      - name: Upload APK Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: WLpong-Release-APKs
+          path: frontend/build/app/outputs/flutter-apk/*-release.apk
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/') # Запускать этот шаг ТОЛЬКО если это пуш тега
+        with:
+          files: frontend/build/app/outputs/flutter-apk/*-release.apk
+          name: Release ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

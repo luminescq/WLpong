@@ -1,0 +1,12 @@
+# Flutter Rust Bridge Configuration
+rust_input: crate::api
+rust_root: backend
+dart_output: frontend/lib/bridge_generated.dart
+
+dart_entrypoint_class_name: RustLib
+
+# Platform-specific configuration
+llvm_path:
+  - /usr/lib/llvm-14
+  - /usr/lib/llvm-15
+  - /usr/lib/llvm-16

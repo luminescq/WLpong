@@ -1,0 +1,43 @@
+{
+  "groups": [
+    {
+      "id": "wl",
+      "name": "Whitelist",
+      "domains": [
+        "yandex.ru",
+        "vk.com",
+        "mail.ru",
+        "ok.ru",
+        "dzen.ru",
+        "ya.ru"
+      ]
+    },
+    {
+      "id": "bl",
+      "name": "Blacklist",
+      "domains": [
+        "tbank.ru",
+        "drom.ru",
+        "4pda.to",
+        "stepik.org",
+        "habr.com",
+        "citilink.ru"
+      ]
+    },
+    {
+      "id": "nt",
+      "name": "Neutral",
+      "domains": [
+        "wikipedia.org",
+        "github.com",
+        "stackoverflow.com",
+        "reddit.com",
+        "amazon.com"
+      ]
+    }
+  ],
+  "config": {
+    "timeout_ms": 5000,
+    "port": 443
+  }
+}

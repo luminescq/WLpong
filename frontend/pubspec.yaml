@@ -1,0 +1,65 @@
+name: wl
+description: "WLpong — Network restriction analyzer"
+publish_to: 'none'
+version: 1.0.0
+
+environment:
+  sdk: ^3.12.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # FFI bridge to Rust backend
+  flutter_rust_bridge: 2.12.0
+
+  # State management
+  flutter_riverpod: ^2.6.1
+
+  # Navigation
+  go_router: ^14.8.1
+
+  url_launcher: ^6.3.0
+
+  # SVG support
+  flutter_svg: ^2.0.10
+  
+  # Fonts
+  google_fonts: ^6.2.1
+
+  rust_lib_wl:
+    path: rust_builder
+  package_info_plus: ^10.2.1
+  shared_preferences: ^2.5.5
+  device_info_plus: ^13.2.0
+  share_plus: ^13.3.0
+  connectivity_plus: ^6.1.1
+  path_provider: ^2.1.3
+
+  # Local Database
+  isar: ^3.1.0-dev.14
+  isar_flutter_libs: ^3.1.0-dev.14
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  build_runner: any
+  isar_generator: ^3.1.0-dev.14
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: false
+  image_path: "assets/icon.png"
+  min_sdk_android: 21
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/domains.json
+    - assets/Shape.svg
+    - assets/icons/
+
+  shaders:
+    - shaders/mesh_gradient.frag
